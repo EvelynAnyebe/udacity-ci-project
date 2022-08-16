@@ -268,7 +268,7 @@ jobs:
             cd backend
             if grep -q "No migrations are pending" migrations_output.txt
             then
-              curl -d '1' https://kvdb.io/F5yPQpav8YCgHBkFgJJdjg/migration_${CIRCLE_WORKFLOW_ID:0:7} 
+              curl -d '1' https://kvdb.io/tNFuFgnXtWNDUtC8Cbir/migration_${CIRCLE_WORKFLOW_ID:0:5} 
             fi
       - destroy-environment
       - revert-migrations
