@@ -142,7 +142,7 @@ jobs:
       - run:
           name: Install tar and gzip
           command: |
-            apk add tar && apk add gzip
+            sudo apt-get tar && sudo apt-get gzip
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -170,6 +170,25 @@ jobs:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment
 
+  configure-infrastructure:
+    docker:
+      # Docker image here that supports Ansible
+    steps:
+      # Checkout code from git
+      # Add ssh keys with fingerprint
+      # attach workspace
+      - run:
+          name: Install dependencies
+          command: |
+            # Your code here
+            exit 1
+      - run:
+          name: Configure server
+          command: |
+            # Your code here
+            exit 1
+      # Here's where you will add some code to rollback on failure
+
 workflows:
   default:
     jobs:
@@ -185,3 +204,5 @@ workflows:
           requires: [build-frontend]
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
