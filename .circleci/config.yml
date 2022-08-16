@@ -107,9 +107,6 @@ jobs:
       - checkout
       - restore_cache:
           keys: [frontend-build]
-      - run:
-          name: Run frontend scan
-
   scan-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -117,8 +114,6 @@ jobs:
       - checkout
       - restore_cache:
           keys: [backend-build]
-      - run:
-          name: Run backend scan
 
 workflows:
   default:
