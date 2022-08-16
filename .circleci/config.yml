@@ -1,17 +1,29 @@
 version: 2.1
 orbs:
   slack: circleci/slack@4.10.1
+
 commands:
+  notify_on_failure:
+    steps:
+      - slack/notify:
+          channel: C03TSAU4X4J
+          event: fail
+          template: basic_fail_1
+
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
-      # Add parameter here
+      Workflow_ID:
+        type: string
+        default: ${CIRCLE_WORKFLOW_ID:0:5}
     steps:
       - run:
           name: Destroy environments
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
+            aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
+            aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
+
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     parameters:
@@ -30,6 +42,34 @@ commands:
             #  Add revert code here. You can find this in the Getting Started section.
               exit 1
             fi
+  install_ansible:
+    description: "Installs Ansible on Ubuntu images"
+    steps:
+      - run:
+          name: "Install Ansible"
+          command: |
+            sudo apt update
+            sudo apt install software-properties-common -y
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible -y
+  install_awscli:
+    description: "Installs AWS_CLI"
+    steps:
+      - run:
+          name: "Install AWS CLI"
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+
+  install_nodejs:
+    description: "This command installs NodeJS on the docker image"
+    steps:
+      - run:
+          name: "Installing node js"
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+            sudo apt install -y nodejs
 
 jobs:
   build-frontend:
@@ -48,6 +88,7 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
+      - notify_on_failure
 
   build-backend:
     docker:
@@ -65,6 +106,8 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - notify_on_failure
+
   test-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -81,6 +124,7 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
+      - notify_on_failure
 
   test-backend:
     docker:
@@ -98,6 +142,7 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - notify_on_failure
 
   scan-frontend:
     docker:
@@ -116,6 +161,8 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
+      - notify_on_failure
+
   scan-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -127,12 +174,15 @@ jobs:
           name: Scan backend
           command: |
             cd backend
-            npm install
-            npm audit fix --audit-level=critical --force
-            # npm audit --audit-level=critical
+            npm install 
+            npm audit fix --force --audit-level=critical           
+            npm audit fix --audit-level=critical
+            npm audit --audit-level=critical
+
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - notify_on_failure
 
   deploy-infrastructure:
     docker:
@@ -146,26 +196,31 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
               --tags project=udapeople \
-              --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
+              --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:5}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:5}"
       - run:
           name: Ensure front-end infrastructure exist
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
               #--tags project=udapeople \
-              # --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              # --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
+              # --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:5}" \
+              # --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:5}"
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            # Your code here
-            exit 1
+            BACKEND_IP=$(aws ec2 describe-instances \
+              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:5}" \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --output text)
+              echo $BACKEND_IP >> .circleci/ansible/inventory.txt
+              cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment
+      - notify_on_failure
 
   configure-infrastructure:
     docker:
@@ -174,6 +229,8 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["65:a6:b3:b7:1b:6a:a7:ad:c7:3c:1d:d1:23:55:32:d8"]
+      - install_ansible
+      - install_awscli
       - attach_workspace:
           at: ~/
       - run:
@@ -189,6 +246,7 @@ jobs:
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment
+      - notify_on_failure
 
 workflows:
   default:
