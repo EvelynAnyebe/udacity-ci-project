@@ -10,4 +10,8 @@ For build jobs that failed because of compile errors.
 
 - SCREESHOT02
 
-For intentional failing tests
+For intentional failing tests. There are two of these screenshots. `SCREENSHOT02-FRONTEND` AND `SCREENSHOT02-BACKEND`
+
+- SCREENSHOT03
+
+For critical vulnerabilities
