@@ -18,3 +18,6 @@ For critical vulnerabilities There are two of these screenshots. `SCREENSHOT03-F
 
 - SCREENSHOTS04
   For slack alerts
+
+- SCREENSHOT05
+  For deploy infrastructure
