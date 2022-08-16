@@ -4,4 +4,6 @@ In this project, an auto deployment pipeline for CI-CD for an example applicatio
 
 The following screenshots are provided for every stage of the project.
 
-- SCREENSHOT01 for failed backend and frontend build
+- SCREENSHOT01
+
+For build jobs that failed because of compile errors.
