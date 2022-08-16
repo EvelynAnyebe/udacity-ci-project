@@ -112,9 +112,10 @@ jobs:
         command: |
           cd frontend
           npm install
-          npm audit --audit-level=critical
+          npm audit
+          exit 1
       - save_cache:
-          paths: [backend/node_modules]
+          paths: [frontend/node_modules]
           key: frontend-scan
 
   scan-backend:
@@ -129,7 +130,8 @@ jobs:
         command: |
           cd backend
           npm install
-          npm audit --audit-level=critical
+          npm audit
+          exit 1
       - save_cache:
           paths: [backend/node_modules]
           key: backend-scan
