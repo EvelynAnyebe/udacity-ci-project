@@ -7,3 +7,7 @@ The following screenshots are provided for every stage of the project.
 - SCREENSHOT01
 
 For build jobs that failed because of compile errors.
+
+- SCREESHOT02
+
+For intentional failing tests
