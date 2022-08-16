@@ -14,4 +14,7 @@ For intentional failing tests. There are two of these screenshots. `SCREENSHOT02
 
 - SCREENSHOT03
 
-For critical vulnerabilities
+For critical vulnerabilities There are two of these screenshots. `SCREENSHOT03-FRONTEND` AND `SCREENSHOT03-BACKEND`
+
+- SCREENSHOTS04
+  For slack alerts
