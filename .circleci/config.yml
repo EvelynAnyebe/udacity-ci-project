@@ -239,7 +239,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt install openssh
+            sudo apt install openssh-client
+            sudo apt install openssh-server
             sudo apt install tar
             sudo apt install gzip
       - run:
