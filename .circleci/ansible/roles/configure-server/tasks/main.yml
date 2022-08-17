@@ -25,7 +25,7 @@
 - name: "installing npm"
   become: true
   apt:
-    name: ["nodejs", "npm"]
+    name: ["npm"]
     state: latest
     update_cache: yes
 
