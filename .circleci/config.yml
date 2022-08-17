@@ -239,10 +239,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible
-            apk add openssh
-            apk add tar
-            apk add gzip
+            sudo apt-get openssh
+            sudo apt-get tar
+            sudo apt-get gzip
       - run:
           name: Configure server
           command: |
