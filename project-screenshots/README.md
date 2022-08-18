@@ -21,3 +21,5 @@ For critical vulnerabilities There are two of these screenshots. `SCREENSHOT03-F
 
 - SCREENSHOT05
   For deploy infrastructure
+
+- SREENSHOT06
