@@ -383,9 +383,9 @@ jobs:
             else
                 exit 1
             fi
-      - destroy-environment
-      - revert-migrations
-      - notify_on_failure
+      #- destroy-environment
+      #- revert-migrations
+      #- notify_on_failure
   cloudfront-update:
     docker:
       - image: cimg/base:stable
