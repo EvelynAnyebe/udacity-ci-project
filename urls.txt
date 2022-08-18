@@ -1,5 +1,5 @@
 i. [URL01] https://github.com/EvelynAnyebe/udacity-ci-project
 ii.[URL02] https://udapeople-4a1f86d.s3.amazonaws.com
 iii.[URL03] https://d3045ohld8da5x.cloudfront.net
-iv. [URL04] https://3.208.21.194:3030/api/status
+iv. [URL04] https://3.208.21.194:3030/api/status test
 v.  Public URL to your Prometheus Server [URL05]
