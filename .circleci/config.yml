@@ -225,6 +225,32 @@ jobs:
       - destroy-environment
       - notify_on_failure
 
+  configure-infrastructure:
+    docker:
+      - image: cimg/base:2022.04
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["a1:c8:b0:f3:5a:e9:5b:49:e6:93:c1:1a:94:47:d6:de"]
+      - install_ansible
+      - install_awscli
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt install openssh-client
+            sudo apt install openssh-server
+            sudo apt install tar
+            sudo apt install gzip
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible
+            cat inventory.txt
+            ansible-playbook -i inventory.txt configure-server.yml
+      - destroy-environment
+
 workflows:
   default:
     jobs:
@@ -240,3 +266,5 @@ workflows:
           requires: [build-frontend]
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
