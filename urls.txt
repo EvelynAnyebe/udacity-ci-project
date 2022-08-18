@@ -1,5 +1,5 @@
 i. [URL01] https://github.com/EvelynAnyebe/udacity-ci-project
-Public URL for your S3 Bucket (aka, your green candidate front-end) [URL02]
-Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]
-Public URLs to deployed application back-end in EC2 [URL04]
-Public URL to your Prometheus Server [URL05]
+ii.[URL02]
+iii.Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]
+iv. Public URLs to deployed application back-end in EC2 [URL04]
+v.  Public URL to your Prometheus Server [URL05]
