@@ -1,5 +1,5 @@
 i. [URL01] https://github.com/EvelynAnyebe/udacity-ci-project
-ii.[URL02] http://udapeople-c0448de.s3-website-us-east-1.amazonaws.com
-iii.Public URL for your CloudFront distribution (aka, your blue production front-end) [URL03]
-iv. Public URLs to deployed application back-end in EC2 [URL04]
+ii.[URL02] https://udapeople-4a1f86d.s3.amazonaws.com
+iii.[URL03] https://d3045ohld8da5x.cloudfront.net
+iv. [URL04] https://3.208.21.194:3030/api/status
 v.  Public URL to your Prometheus Server [URL05]
