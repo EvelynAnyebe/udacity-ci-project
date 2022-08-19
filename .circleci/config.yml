@@ -345,9 +345,9 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            export TYPEORM_MIGRATIONS_DIR=.migrations
-            export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
-            export TYPEORM_MIGRATIONS=./migrations/*.ts
+            export TYPEORM_MIGRATIONS_DIR=./src/migrations
+            export TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts
+            export TYPEORM_MIGRATIONS=./src/migrations/*.ts
             cd .circleci/ansible
             ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy-environment
@@ -368,6 +368,7 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text)
             export API_URL=http://${BACKEND_IP}:3030
+            echo "API_URL=http://${BACKEND_IP}:3030"
             if curl -s ${API_URL}/api/status | grep "ok"
             then 
               exit 0
@@ -384,9 +385,9 @@ jobs:
             else
                 exit 1
             fi
-      #- destroy-environment
-      #- revert-migrations
-      #- notify_on_failure
+      - destroy-environment
+      - revert-migrations
+      - notify_on_failure
   cloudfront-update:
     docker:
       - image: cimg/base:stable
