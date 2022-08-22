@@ -306,3 +306,4 @@ scrape_configs:
         access_key: AKIAQCQ7QTHMY32GAJTM
         secret_key: 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
         port: 9100
+# check deployment again
