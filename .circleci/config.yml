@@ -231,7 +231,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["a1:c8:b0:f3:5a:e9:5b:49:e6:93:c1:1a:94:47:d6:de"]
+          fingerprints: ["98:25:ee:76:32:38:dc:58:93:c1:61:f0:76:24:3b:fb"]
       - install_ansible
       - install_awscli
       - attach_workspace:
@@ -300,7 +300,7 @@ jobs:
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text)
-            echo "API_URL=http://${BACKEND_IP}:3030" >> frontend/.env
+            echo "API_URL=https://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
       - run:
           name: Deploy frontend objects
@@ -323,7 +323,7 @@ jobs:
       - install_ansible
       - install_nodejs
       - add_ssh_keys:
-          fingerprints: ["a1:c8:b0:f3:5a:e9:5b:49:e6:93:c1:1a:94:47:d6:de"]
+          fingerprints: ["98:25:ee:76:32:38:dc:58:93:c1:61:f0:76:24:3b:fb"]
       - attach_workspace:
           at: ~/
       - restore_cache:
