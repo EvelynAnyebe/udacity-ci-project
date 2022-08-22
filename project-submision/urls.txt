@@ -1,5 +1,5 @@
 i. [URL01] https://github.com/EvelynAnyebe/udacity-ci-project
-ii.[URL02] https://udapeople-7832ade.s3.amazonaws.com/index.html
-iii.[URL03] https://d2b7hhgdzv7xwr.cloudfront.net
-iv. [URL04] https://ec2-34-201-149-235.compute-1.amazonaws.com
+ii.[URL02] https://udapeople-a362cba.s3.amazonaws.com/index.html
+iii.[URL03] https://d3cskvvtr1rwjy.cloudfront.net/#/employees
+iv. [URL04] http://107.23.145.235:3030/api/status
 v.  [URL05] https://ec2-3-87-169-170.compute-1.amazonaws.com:9090/targets
